@@ -26,6 +26,7 @@ automations on top.
 - Setup and options use a numeric scan interval input in minutes. The default
   is 15 minutes, matching the conservative polling cadence of the official
   SolarEdge Home Assistant integration.
+- Changing options reloads the integration so the polling interval takes effect.
 
 The existing official SolarEdge integration should remain responsible for site
 production, grid import/export, battery, module statistics, and Energy
