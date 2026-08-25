@@ -11,6 +11,11 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.selector import (
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
+)
 
 from .api import (
     SolarEdgeHomeAutomationApiError,
@@ -54,7 +59,7 @@ class SolarEdgeHomeAutomationConfigFlow(
                         CONF_SITE_ID: site_id,
                         CONF_USERNAME: str(user_input[CONF_USERNAME]).strip(),
                         CONF_PASSWORD: user_input[CONF_PASSWORD],
-                        CONF_SCAN_INTERVAL: user_input[CONF_SCAN_INTERVAL],
+                        CONF_SCAN_INTERVAL: _scan_interval(user_input),
                     },
                 )
 
@@ -112,7 +117,7 @@ class SolarEdgeHomeAutomationOptionsFlow(config_entries.OptionsFlow):
             if not errors:
                 return self.async_create_entry(
                     title="",
-                    data={CONF_SCAN_INTERVAL: user_input[CONF_SCAN_INTERVAL]},
+                    data={CONF_SCAN_INTERVAL: _scan_interval(user_input)},
                 )
 
         defaults = {
@@ -140,9 +145,14 @@ def _schema(defaults: dict[str, Any] | None = None) -> vol.Schema:
             vol.Required(
                 CONF_SCAN_INTERVAL,
                 default=defaults.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_MINUTES),
-            ): vol.All(
-                vol.Coerce(int),
-                vol.Range(min=MIN_SCAN_INTERVAL_MINUTES, max=MAX_SCAN_INTERVAL_MINUTES),
+            ): NumberSelector(
+                NumberSelectorConfig(
+                    min=MIN_SCAN_INTERVAL_MINUTES,
+                    max=MAX_SCAN_INTERVAL_MINUTES,
+                    step=1,
+                    mode=NumberSelectorMode.BOX,
+                    unit_of_measurement="min",
+                )
             ),
         }
     )
@@ -152,9 +162,17 @@ def _options_schema(defaults: dict[str, Any]) -> vol.Schema:
     """Return options schema."""
     return vol.Schema(
         {
-            vol.Required(CONF_SCAN_INTERVAL, default=defaults[CONF_SCAN_INTERVAL]): vol.All(
-                vol.Coerce(int),
-                vol.Range(min=MIN_SCAN_INTERVAL_MINUTES, max=MAX_SCAN_INTERVAL_MINUTES),
+            vol.Required(
+                CONF_SCAN_INTERVAL,
+                default=defaults[CONF_SCAN_INTERVAL],
+            ): NumberSelector(
+                NumberSelectorConfig(
+                    min=MIN_SCAN_INTERVAL_MINUTES,
+                    max=MAX_SCAN_INTERVAL_MINUTES,
+                    step=1,
+                    mode=NumberSelectorMode.BOX,
+                    unit_of_measurement="min",
+                )
             ),
         }
     )
@@ -172,9 +190,19 @@ def _validate_static_input(user_input: dict[str, Any]) -> dict[str, str]:
 def _validate_options_input(user_input: dict[str, Any]) -> dict[str, str]:
     """Validate options fields."""
     errors: dict[str, str] = {}
-    interval = user_input.get(CONF_SCAN_INTERVAL)
-    if not isinstance(interval, int) or not (
-        MIN_SCAN_INTERVAL_MINUTES <= interval <= MAX_SCAN_INTERVAL_MINUTES
-    ):
+    try:
+        interval = _scan_interval(user_input)
+    except (TypeError, ValueError):
+        errors[CONF_SCAN_INTERVAL] = "invalid_scan_interval"
+        return errors
+    if not MIN_SCAN_INTERVAL_MINUTES <= interval <= MAX_SCAN_INTERVAL_MINUTES:
         errors[CONF_SCAN_INTERVAL] = "invalid_scan_interval"
     return errors
+
+
+def _scan_interval(user_input: dict[str, Any]) -> int:
+    """Return scan interval as a whole number of minutes."""
+    value = float(user_input[CONF_SCAN_INTERVAL])
+    if not value.is_integer():
+        raise ValueError("scan interval must be a whole number")
+    return int(value)
