@@ -28,7 +28,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, site_id)},
         manufacturer="SolarEdge",
-        name=f"SolarEdge Home Automation {site_id}",
+        name=f"SolarEdge Site {site_id}",
     )
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {

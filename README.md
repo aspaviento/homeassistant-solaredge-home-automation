@@ -32,6 +32,9 @@ The existing official SolarEdge integration should remain responsible for site
 production, grid import/export, battery, module statistics, and Energy
 Dashboard data.
 
+The integration creates a parent Home Assistant device named `SolarEdge Site
+<site_id>` and connects Smart Devices and EV Chargers through that site device.
+
 ## Installation
 
 1. Add this repository to HACS as an integration repository.
