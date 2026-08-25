@@ -1,9 +1,20 @@
 # SolarEdge Home Automation
 
-Private Home Assistant custom integration for SolarEdge Home Automation devices.
+Experimental Home Assistant custom integration for SolarEdge Home Automation
+devices.
 
 This integration uses the SolarEdge monitoring web session to read the
-undocumented Home Automation API. It is intended for private use with HACS.
+undocumented Home Automation API. It is intended for personal use through HACS.
+
+## Experimental Status
+
+This project is not affiliated with, endorsed by, or supported by SolarEdge.
+It uses undocumented SolarEdge Monitoring endpoints that may change or stop
+working without notice.
+
+Use it only if you are comfortable with occasional breakage and manual recovery.
+Start with read-only sensors and test charger controls manually before building
+automations on top.
 
 ## Scope
 
@@ -17,14 +28,15 @@ Dashboard data.
 
 ## Installation
 
-1. Add this private repository to HACS as an integration repository.
+1. Add this repository to HACS as an integration repository.
 2. Download the integration through HACS.
 3. Restart Home Assistant.
 4. Add **SolarEdge Home Automation** from Settings -> Devices & services.
 5. Enter the SolarEdge site ID and monitoring account credentials.
 
-## Notes
+## Security Notes
 
-The API used here is not documented by SolarEdge and may change. Start with
-read-only sensors and use charger buttons manually before building automations
-on top.
+The integration stores SolarEdge Monitoring credentials in Home Assistant's
+config entry storage, like other cloud integrations. Do not share diagnostics
+or logs that contain credentials, cookies, bearer tokens, site IDs, device IDs,
+vehicle identifiers, or household device names.

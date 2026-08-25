@@ -2,14 +2,13 @@
 
 ## Project Scope
 
-This repository is the private source for a Home Assistant custom integration
+This repository is the public source for a Home Assistant custom integration
 installable through HACS. It exposes SolarEdge Home Automation devices from the
 SolarEdge monitoring web API, including SolarEdge Smart Devices and the
 integrated SolarEdge EV Charger.
 
 The API used here is not a public SolarEdge API. Keep the repository private
-unless the authentication model, payload examples, and support boundary are
-intentionally redesigned for public release.
+operationally safe even though the repository itself is public.
 
 ## Repository Layout
 
@@ -20,7 +19,7 @@ intentionally redesigned for public release.
 - `custom_components/solaredge_home_automation/manifest.json`: Home Assistant
   integration metadata, including version.
 
-## Private Safety
+## Public Safety
 
 Do not commit real SolarEdge usernames, passwords, cookies, bearer tokens,
 site IDs, device IDs, serial numbers, vehicle identifiers, local hostnames,
