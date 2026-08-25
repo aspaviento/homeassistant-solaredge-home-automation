@@ -23,7 +23,9 @@ automations on top.
   explicit charge/stop buttons.
 - EV Charger charging, plugged-in, solar usage, available action, and
   connection diagnostics.
-- Setup and options use a numeric scan interval input in minutes.
+- Setup and options use a numeric scan interval input in minutes. The default
+  is 15 minutes, matching the conservative polling cadence of the official
+  SolarEdge Home Assistant integration.
 
 The existing official SolarEdge integration should remain responsible for site
 production, grid import/export, battery, module statistics, and Energy
