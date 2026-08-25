@@ -1,0 +1,106 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SolarEdge Home Automation",
+        "description": "Conecta con la API web de SolarEdge Monitoring para exponer dispositivos Home Automation.",
+        "data": {
+          "site_id": "Site ID",
+          "username": "Usuario SolarEdge",
+          "password": "Contrasena SolarEdge",
+          "scan_interval": "Intervalo de consulta en minutos"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se pudo conectar con SolarEdge",
+      "invalid_auth": "Credenciales SolarEdge no validas",
+      "required": "Este campo es obligatorio",
+      "invalid_scan_interval": "El intervalo debe estar entre 1 y 60 minutos"
+    },
+    "abort": {
+      "already_configured": "Este site SolarEdge ya esta configurado"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de SolarEdge Home Automation",
+        "data": {
+          "scan_interval": "Intervalo de consulta en minutos"
+        }
+      }
+    },
+    "error": {
+      "invalid_scan_interval": "El intervalo debe estar entre 1 y 60 minutos"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "active": {
+        "name": "Activo"
+      },
+      "plugged_in": {
+        "name": "Enchufado"
+      },
+      "session_active": {
+        "name": "Sesion activa"
+      },
+      "excess_pv_enabled": {
+        "name": "Excedente PV activo"
+      },
+      "use_battery": {
+        "name": "Usar bateria"
+      }
+    },
+    "button": {
+      "charge_now": {
+        "name": "Cargar ahora"
+      },
+      "stop_charging": {
+        "name": "Parar carga"
+      }
+    },
+    "sensor": {
+      "active_power": {
+        "name": "Potencia activa"
+      },
+      "activation_mode": {
+        "name": "Modo de activacion"
+      },
+      "activation_state": {
+        "name": "Estado de activacion"
+      },
+      "charger_status": {
+        "name": "Estado del cargador"
+      },
+      "next_schedule_end": {
+        "name": "Fin proxima programacion"
+      },
+      "next_schedule_start": {
+        "name": "Inicio proxima programacion"
+      },
+      "rated_power": {
+        "name": "Potencia nominal"
+      },
+      "schedule_title": {
+        "name": "Programacion"
+      },
+      "schedule_type": {
+        "name": "Tipo de programacion"
+      },
+      "session_distance": {
+        "name": "Distancia sesion"
+      },
+      "session_duration": {
+        "name": "Duracion sesion"
+      },
+      "session_energy": {
+        "name": "Energia sesion"
+      },
+      "vehicle": {
+        "name": "Vehiculo"
+      }
+    }
+  }
+}

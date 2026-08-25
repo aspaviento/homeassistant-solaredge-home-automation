@@ -1,0 +1,106 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SolarEdge Home Automation",
+        "description": "Connect to the SolarEdge monitoring web API to expose Home Automation devices.",
+        "data": {
+          "site_id": "Site ID",
+          "username": "SolarEdge username",
+          "password": "SolarEdge password",
+          "scan_interval": "Scan interval in minutes"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect to SolarEdge",
+      "invalid_auth": "Invalid SolarEdge credentials",
+      "required": "This field is required",
+      "invalid_scan_interval": "Scan interval must be between 1 and 60 minutes"
+    },
+    "abort": {
+      "already_configured": "This SolarEdge site is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SolarEdge Home Automation options",
+        "data": {
+          "scan_interval": "Scan interval in minutes"
+        }
+      }
+    },
+    "error": {
+      "invalid_scan_interval": "Scan interval must be between 1 and 60 minutes"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "active": {
+        "name": "Active"
+      },
+      "plugged_in": {
+        "name": "Plugged in"
+      },
+      "session_active": {
+        "name": "Session active"
+      },
+      "excess_pv_enabled": {
+        "name": "Excess PV enabled"
+      },
+      "use_battery": {
+        "name": "Use battery"
+      }
+    },
+    "button": {
+      "charge_now": {
+        "name": "Charge now"
+      },
+      "stop_charging": {
+        "name": "Stop charging"
+      }
+    },
+    "sensor": {
+      "active_power": {
+        "name": "Active power"
+      },
+      "activation_mode": {
+        "name": "Activation mode"
+      },
+      "activation_state": {
+        "name": "Activation state"
+      },
+      "charger_status": {
+        "name": "Charger status"
+      },
+      "next_schedule_end": {
+        "name": "Next schedule end"
+      },
+      "next_schedule_start": {
+        "name": "Next schedule start"
+      },
+      "rated_power": {
+        "name": "Rated power"
+      },
+      "schedule_title": {
+        "name": "Schedule title"
+      },
+      "schedule_type": {
+        "name": "Schedule type"
+      },
+      "session_distance": {
+        "name": "Session distance"
+      },
+      "session_duration": {
+        "name": "Session duration"
+      },
+      "session_energy": {
+        "name": "Session energy"
+      },
+      "vehicle": {
+        "name": "Vehicle"
+      }
+    }
+  }
+}
