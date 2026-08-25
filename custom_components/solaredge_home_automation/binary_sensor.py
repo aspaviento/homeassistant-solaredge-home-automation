@@ -33,6 +33,11 @@ SMART_DEVICE_BINARY_SENSORS: tuple[SolarEdgeBinarySensorDescription, ...] = (
 
 EV_CHARGER_BINARY_SENSORS: tuple[SolarEdgeBinarySensorDescription, ...] = (
     SolarEdgeBinarySensorDescription(
+        key="charging",
+        translation_key="charging",
+        value_fn=lambda device, info: device.get("chargerStatus") == "CHARGING",
+    ),
+    SolarEdgeBinarySensorDescription(
         key="plugged_in",
         translation_key="plugged_in",
         value_fn=lambda device, info: device.get("chargerStatus") == "PLUGGED_IN"

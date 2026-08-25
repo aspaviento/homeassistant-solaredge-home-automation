@@ -90,6 +90,12 @@ EV_CHARGER_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
         value_fn=lambda device, info: device.get("chargerStatus"),
     ),
     SolarEdgeSensorDescription(
+        key="connection_status",
+        translation_key="connection_status",
+        value_fn=lambda device, info: device.get("connectionStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
         key="activation_mode",
         translation_key="activation_mode",
         value_fn=lambda device, info: device.get("activationMode"),
@@ -105,6 +111,24 @@ EV_CHARGER_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
         key="schedule_title",
         translation_key="schedule_title",
         value_fn=lambda device, info: device.get("scheduleTitle"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="available_action",
+        translation_key="available_action",
+        value_fn=lambda device, info: _available_action(device),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="session_solar_usage",
+        translation_key="session_solar_usage",
+        value_fn=lambda device, info: device.get("sessionSolarUsage"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="excess_pv",
+        translation_key="excess_pv",
+        value_fn=lambda device, info: device.get("excessPV"),
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SolarEdgeSensorDescription(
@@ -243,3 +267,12 @@ def _vehicle_attributes(device: dict[str, Any], info: dict[str, Any]) -> dict[st
         "manufacturer_year": vehicle.get("manufacturerYear"),
         "origin": vehicle.get("origin"),
     }
+
+
+def _available_action(device: dict[str, Any]) -> str | None:
+    """Return the first available SolarEdge action label."""
+    actions = device.get("actionOperationDetails") or []
+    if not actions:
+        return None
+    action = actions[0]
+    return action.get("actionText") or action.get("actionOp")

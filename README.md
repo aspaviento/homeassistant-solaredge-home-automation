@@ -21,6 +21,8 @@ automations on top.
 - Smart Devices returned by the SolarEdge Home Automation `/devices` endpoint.
 - SolarEdge EV Charger status, current session data, schedule details, and
   explicit charge/stop buttons.
+- EV Charger charging, plugged-in, solar usage, available action, and
+  connection diagnostics.
 
 The existing official SolarEdge integration should remain responsible for site
 production, grid import/export, battery, module statistics, and Energy

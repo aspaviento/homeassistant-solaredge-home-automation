@@ -40,6 +40,9 @@
       "active": {
         "name": "Active"
       },
+      "charging": {
+        "name": "Charging"
+      },
       "plugged_in": {
         "name": "Plugged in"
       },
@@ -73,6 +76,18 @@
       },
       "charger_status": {
         "name": "Charger status"
+      },
+      "connection_status": {
+        "name": "Connection status"
+      },
+      "available_action": {
+        "name": "Available action"
+      },
+      "session_solar_usage": {
+        "name": "Session solar usage"
+      },
+      "excess_pv": {
+        "name": "Excess PV"
       },
       "next_schedule_end": {
         "name": "Next schedule end"
