@@ -14,7 +14,7 @@ operationally safe even though the repository itself is public.
 
 - `custom_components/solaredge_home_automation/`: Home Assistant integration
   source.
-- `README.md`: private installation and usage documentation.
+- `README.md`: public installation, usage, and limitation documentation.
 - `hacs.json`: HACS repository metadata.
 - `custom_components/solaredge_home_automation/manifest.json`: Home Assistant
   integration metadata, including version.
@@ -39,6 +39,9 @@ repository, not in public documentation.
 - Do not model the EV Charger as a simple switch unless the state mapping is
   proven reliable for all relevant states.
 - Keep Smart Device state based on the SolarEdge `status.level` field.
+- Treat schedule editing, Excess Solar, Use Battery, Smart Device writes,
+  Connected Car settings, Charging History, and charger Settings as future work
+  until their undocumented endpoints have been captured and manually tested.
 
 ## HACS And Releases
 

@@ -16,7 +16,7 @@ Use it only if you are comfortable with occasional breakage and manual recovery.
 Start with read-only sensors and test charger controls manually before building
 automations on top.
 
-## Scope
+## Current Scope
 
 - Smart Devices returned by the SolarEdge Home Automation `/devices` endpoint.
 - SolarEdge EV Charger status, current session data, schedule details, and
@@ -34,6 +34,18 @@ Dashboard data.
 
 The integration creates a parent Home Assistant device named `SolarEdge Site
 <site_id>` and connects Smart Devices and EV Chargers through that site device.
+
+## Current Limitations
+
+- Schedule editing is not implemented.
+- Excess Solar and Use Battery toggles are not implemented.
+- Smart Device on/off controls are not implemented.
+- Connected Car settings, Charging History, and charger Settings are read-only or
+  out of scope for now.
+
+Those controls may be added later if their SolarEdge web API endpoints are
+captured and tested safely. Do not assume undocumented endpoint behavior from the
+Home Assistant entity model alone.
 
 ## Installation
 
