@@ -40,6 +40,9 @@
       "active": {
         "name": "Activo"
       },
+      "timer_active": {
+        "name": "Temporizador activo"
+      },
       "charging": {
         "name": "Cargando"
       },
@@ -71,6 +74,14 @@
       },
       "auto": {
         "name": "Auto"
+      },
+      "turn_on_for_timer": {
+        "name": "Encender con temporizador"
+      }
+    },
+    "number": {
+      "timer_duration": {
+        "name": "Duracion temporizador"
       }
     },
     "sensor": {
@@ -112,6 +123,9 @@
       },
       "schedule_type": {
         "name": "Tipo de programacion"
+      },
+      "timer_end": {
+        "name": "Fin temporizador"
       },
       "session_distance": {
         "name": "Distancia sesion"

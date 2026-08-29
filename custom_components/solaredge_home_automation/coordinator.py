@@ -15,7 +15,15 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import SolarEdgeHomeAutomationApiError, SolarEdgeHomeAutomationClient
-from .const import CONF_SCAN_INTERVAL, CONF_SITE_ID, DEFAULT_SCAN_INTERVAL_MINUTES, DOMAIN, EV_CHARGER, LOGGER
+from .const import (
+    CONF_SCAN_INTERVAL,
+    CONF_SITE_ID,
+    DEFAULT_SCAN_INTERVAL_MINUTES,
+    DEFAULT_TIMER_DURATION_MINUTES,
+    DOMAIN,
+    EV_CHARGER,
+    LOGGER,
+)
 
 
 @dataclass(frozen=True)
@@ -54,6 +62,7 @@ class SolarEdgeHomeAutomationCoordinator(
             site_id=entry.data[CONF_SITE_ID],
             session=async_get_clientsession(hass),
         )
+        self.timer_duration_minutes: dict[str, int] = {}
 
     async def _async_update_data(self) -> SolarEdgeHomeAutomationData:
         """Fetch and normalize SolarEdge Home Automation data."""
@@ -138,3 +147,14 @@ class SolarEdgeHomeAutomationCoordinator(
             duration=duration,
         )
         await self.async_request_refresh()
+
+    async def async_turn_on_device_for_selected_duration(self, device_id: str) -> None:
+        """Turn on a Smart Energy device for its selected timer duration."""
+        await self.async_turn_on_device_for(
+            device_id,
+            self.timer_duration_minutes.get(device_id, DEFAULT_TIMER_DURATION_MINUTES),
+        )
+
+    def set_timer_duration(self, device_id: str, duration: int) -> None:
+        """Set the selected timer duration for a Smart Energy device."""
+        self.timer_duration_minutes[device_id] = duration

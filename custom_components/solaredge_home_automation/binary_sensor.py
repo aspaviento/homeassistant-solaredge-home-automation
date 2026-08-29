@@ -29,6 +29,12 @@ SMART_DEVICE_BINARY_SENSORS: tuple[SolarEdgeBinarySensorDescription, ...] = (
         translation_key="active",
         value_fn=lambda device, info: (device.get("status") or {}).get("level") == 100,
     ),
+    SolarEdgeBinarySensorDescription(
+        key="timer_active",
+        translation_key="timer_active",
+        value_fn=lambda device, info: (device.get("status") or {}).get("level") == 100
+        and (device.get("status") or {}).get("endTime") is not None,
+    ),
 )
 
 EV_CHARGER_BINARY_SENSORS: tuple[SolarEdgeBinarySensorDescription, ...] = (

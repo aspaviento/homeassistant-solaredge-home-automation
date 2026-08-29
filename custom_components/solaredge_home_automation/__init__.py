@@ -25,6 +25,7 @@ SERVICE_TURN_ON_FOR_SCHEMA = vol.Schema(
 PLATFORMS: tuple[Platform, ...] = (
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
+    Platform.NUMBER,
     Platform.SENSOR,
 )
 

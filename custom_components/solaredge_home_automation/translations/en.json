@@ -40,6 +40,9 @@
       "active": {
         "name": "Active"
       },
+      "timer_active": {
+        "name": "Timer active"
+      },
       "charging": {
         "name": "Charging"
       },
@@ -71,6 +74,14 @@
       },
       "auto": {
         "name": "Auto"
+      },
+      "turn_on_for_timer": {
+        "name": "Turn on for timer"
+      }
+    },
+    "number": {
+      "timer_duration": {
+        "name": "Timer duration"
       }
     },
     "sensor": {
@@ -112,6 +123,9 @@
       },
       "schedule_type": {
         "name": "Schedule type"
+      },
+      "timer_end": {
+        "name": "Timer end"
       },
       "session_distance": {
         "name": "Session distance"

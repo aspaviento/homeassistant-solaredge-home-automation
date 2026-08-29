@@ -24,6 +24,8 @@ automations on top.
   payload.
 - Smart Device timed manual turn-on service. SolarEdge `duration` is expressed
   in minutes.
+- Smart Device timer duration number entity and a visible turn-on-for-timer
+  button per Smart Device.
 - SolarEdge EV Charger status, current session data, schedule details, and
   explicit charge/stop buttons.
 - EV Charger charging, plugged-in, solar usage, available action, and
@@ -45,6 +47,8 @@ The integration creates a parent Home Assistant device named `SolarEdge Site
 ### `solaredge_home_automation.turn_on_for`
 
 Turns on one or more Smart Energy devices manually for a duration in minutes.
+This service is also exposed as visible per-device controls through the Timer
+duration number entity and the Turn on for timer button.
 
 Example:
 
@@ -53,7 +57,7 @@ action: solaredge_home_automation.turn_on_for
 data:
   entity_id:
     - binary_sensor.example_device_active
-  duration: 60
+  duration: 5
 ```
 
 ## Current Limitations

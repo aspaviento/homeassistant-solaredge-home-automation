@@ -58,6 +58,13 @@ SMART_DEVICE_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
         value_fn=lambda device, info: (device.get("status") or {}).get("scheduleType"),
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
+    SolarEdgeSensorDescription(
+        key="timer_end",
+        translation_key="timer_end",
+        value_fn=lambda device, info: _smart_device_timer_end(device),
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
 )
 
 EV_CHARGER_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
@@ -256,6 +263,19 @@ def _ms_timestamp(value: Any) -> datetime | None:
     if value is None:
         return None
     return datetime.fromtimestamp(float(value) / 1000).astimezone()
+
+
+def _smart_device_timer_end(device: dict[str, Any]) -> datetime | None:
+    """Return the Smart Energy manual timer end time."""
+    status = device.get("status") or {}
+    end_time = status.get("endTime")
+    if end_time is not None:
+        return _ms_timestamp(end_time)
+
+    end_time_with_offset = status.get("endTimeWithOffset")
+    if end_time_with_offset is None:
+        return None
+    return datetime.fromisoformat(str(end_time_with_offset)).astimezone()
 
 
 def _vehicle_attributes(device: dict[str, Any], info: dict[str, Any]) -> dict[str, Any]:
