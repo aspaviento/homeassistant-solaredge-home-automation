@@ -20,8 +20,7 @@ automations on top.
 
 - Smart Devices returned by the SolarEdge Home Automation `/devices` endpoint.
 - Smart Device explicit manual turn-on and turn-off buttons.
-- Smart Device Auto button, using the currently assumed `AUTO` activation mode
-  payload.
+- Smart Device Auto button.
 - Smart Device timed manual turn-on service. SolarEdge `duration` is expressed
   in minutes.
 - Smart Device timer duration number entity and a visible turn-on-for-timer
@@ -41,6 +40,21 @@ Dashboard data.
 
 The integration creates a parent Home Assistant device named `SolarEdge Site
 <site_id>` and connects Smart Devices and EV Chargers through that site device.
+
+## Validated Controls
+
+The following controls have been validated against a live SolarEdge Home
+Automation installation:
+
+- EV Charger charge now and stop charging.
+- Smart Device manual turn on and turn off.
+- Smart Device Auto mode.
+- Smart Device turn on for timer, with duration expressed in minutes.
+
+The Smart Device timer is exposed in Home Assistant as a per-device Timer
+duration number entity and a Turn on for timer button. The timer end timestamp
+and timer active binary sensor depend on the status fields returned by SolarEdge
+after polling.
 
 ## Services
 
@@ -64,14 +78,19 @@ data:
 
 - Schedule editing is not implemented.
 - Excess Solar and Use Battery toggles are not implemented.
-- Smart Device Auto mode and timer controls are experimental and based on
-  inferred payload semantics.
 - Connected Car settings, Charging History, and charger Settings are read-only or
   out of scope for now.
 
 Further controls may be added later if their SolarEdge web API endpoints and
 payload semantics are captured and tested safely. Do not assume undocumented
 endpoint behavior from the Home Assistant entity model alone.
+
+For actions that are only available in the mySolarEdge mobile app, HTTPS proxy
+capture with a tool such as Proxyman, Charles Proxy, or mitmproxy is the
+preferred discovery method. Packet capture alone is usually not enough because
+the API traffic is HTTPS encrypted. Do not publish captured cookies, bearer
+tokens, account identifiers, site IDs, device IDs, vehicle identifiers, schedules,
+or household device names.
 
 ## Installation
 

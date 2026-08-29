@@ -42,9 +42,14 @@ repository, not in public documentation.
 - Smart Device manual on/off, Auto, and timed manual on use the same
   `activationState` endpoint as EV Charger charge/stop. Keep mode controls as
   explicit buttons or services until broader state semantics are proven.
+- Live validation has confirmed Smart Device manual on/off, Auto, and timed
+  manual on. SolarEdge `duration` for timed Smart Device activation is minutes.
 - Treat schedule editing, Excess Solar, Use Battery, Connected Car settings,
   Charging History, and charger Settings as future work until their
   undocumented endpoints have been captured and manually tested.
+- For mobile-app-only actions, prefer HTTPS proxy capture with Proxyman,
+  Charles Proxy, or mitmproxy. Wireshark-style packet capture is normally not
+  sufficient because the relevant payloads are HTTPS encrypted.
 
 ## HACS And Releases
 
