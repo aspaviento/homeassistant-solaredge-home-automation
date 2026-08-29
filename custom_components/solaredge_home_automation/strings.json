@@ -62,6 +62,12 @@
       },
       "stop_charging": {
         "name": "Stop charging"
+      },
+      "turn_on": {
+        "name": "Turn on"
+      },
+      "turn_off": {
+        "name": "Turn off"
       }
     },
     "sensor": {

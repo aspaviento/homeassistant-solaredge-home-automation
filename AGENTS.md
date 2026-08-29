@@ -39,9 +39,12 @@ repository, not in public documentation.
 - Do not model the EV Charger as a simple switch unless the state mapping is
   proven reliable for all relevant states.
 - Keep Smart Device state based on the SolarEdge `status.level` field.
-- Treat schedule editing, Excess Solar, Use Battery, Smart Device writes,
-  Connected Car settings, Charging History, and charger Settings as future work
-  until their undocumented endpoints have been captured and manually tested.
+- Smart Device manual on/off uses the same `activationState` endpoint as EV
+  Charger charge/stop. Keep those controls explicit buttons.
+- Treat schedule editing, Excess Solar, Use Battery, Smart Device Auto mode,
+  Smart Device timer controls, Connected Car settings, Charging History, and
+  charger Settings as future work until their undocumented endpoints have been
+  captured and manually tested.
 
 ## HACS And Releases
 

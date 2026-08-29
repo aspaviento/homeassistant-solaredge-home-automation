@@ -35,6 +35,19 @@ EV_CHARGER_BUTTONS: tuple[SolarEdgeButtonDescription, ...] = (
     ),
 )
 
+SMART_DEVICE_BUTTONS: tuple[SolarEdgeButtonDescription, ...] = (
+    SolarEdgeButtonDescription(
+        key="turn_on",
+        translation_key="turn_on",
+        press_fn="async_turn_on_device",
+    ),
+    SolarEdgeButtonDescription(
+        key="turn_off",
+        translation_key="turn_off",
+        press_fn="async_turn_off_device",
+    ),
+)
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -46,11 +59,17 @@ async def async_setup_entry(
         DATA_COORDINATOR
     ]
     site_id = entry.data[CONF_SITE_ID]
-    async_add_entities(
+    entities = [
+        SolarEdgeHomeAutomationButton(coordinator, site_id, device, description)
+        for device in coordinator.data.smart_devices
+        for description in SMART_DEVICE_BUTTONS
+    ]
+    entities.extend(
         SolarEdgeHomeAutomationButton(coordinator, site_id, device, description)
         for device in coordinator.data.ev_chargers
         for description in EV_CHARGER_BUTTONS
     )
+    async_add_entities(entities)
 
 
 class SolarEdgeHomeAutomationButton(SolarEdgeHomeAutomationEntity, ButtonEntity):
