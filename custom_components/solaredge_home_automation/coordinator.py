@@ -119,3 +119,22 @@ class SolarEdgeHomeAutomationCoordinator(
             level=0,
         )
         await self.async_request_refresh()
+
+    async def async_auto_device(self, device_id: str) -> None:
+        """Return a Smart Energy device to automatic operation."""
+        await self.client.async_set_activation_state(
+            device_id,
+            mode="AUTO",
+            level=None,
+        )
+        await self.async_request_refresh()
+
+    async def async_turn_on_device_for(self, device_id: str, duration: int) -> None:
+        """Turn on a Smart Energy device manually for a duration in seconds."""
+        await self.client.async_set_activation_state(
+            device_id,
+            mode="MANUAL",
+            level=100,
+            duration=duration,
+        )
+        await self.async_request_refresh()

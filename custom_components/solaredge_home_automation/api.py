@@ -69,7 +69,7 @@ class SolarEdgeHomeAutomationClient:
         device_id: str,
         *,
         mode: str,
-        level: int,
+        level: int | None,
         duration: int | None = None,
     ) -> dict[str, Any]:
         """Set a device activation state."""

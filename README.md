@@ -20,6 +20,10 @@ automations on top.
 
 - Smart Devices returned by the SolarEdge Home Automation `/devices` endpoint.
 - Smart Device explicit manual turn-on and turn-off buttons.
+- Smart Device Auto button, using the currently assumed `AUTO` activation mode
+  payload.
+- Smart Device timed manual turn-on service, assuming SolarEdge `duration` is
+  expressed in seconds.
 - SolarEdge EV Charger status, current session data, schedule details, and
   explicit charge/stop buttons.
 - EV Charger charging, plugged-in, solar usage, available action, and
@@ -36,15 +40,33 @@ Dashboard data.
 The integration creates a parent Home Assistant device named `SolarEdge Site
 <site_id>` and connects Smart Devices and EV Chargers through that site device.
 
+## Services
+
+### `solaredge_home_automation.turn_on_for`
+
+Turns on one or more Smart Energy devices manually for a duration. The current
+implementation assumes SolarEdge expects the duration in seconds.
+
+Example:
+
+```yaml
+action: solaredge_home_automation.turn_on_for
+data:
+  entity_id:
+    - binary_sensor.example_device_active
+  duration: 60
+```
+
 ## Current Limitations
 
 - Schedule editing is not implemented.
 - Excess Solar and Use Battery toggles are not implemented.
-- Smart Device Auto mode and timer controls are not implemented.
+- Smart Device Auto mode and timer controls are experimental and based on
+  inferred payload semantics.
 - Connected Car settings, Charging History, and charger Settings are read-only or
   out of scope for now.
 
-Those controls may be added later if their SolarEdge web API endpoints and
+Further controls may be added later if their SolarEdge web API endpoints and
 payload semantics are captured and tested safely. Do not assume undocumented
 endpoint behavior from the Home Assistant entity model alone.
 

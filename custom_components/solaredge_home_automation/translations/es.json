@@ -68,6 +68,9 @@
       },
       "turn_off": {
         "name": "Apagar"
+      },
+      "auto": {
+        "name": "Auto"
       }
     },
     "sensor": {

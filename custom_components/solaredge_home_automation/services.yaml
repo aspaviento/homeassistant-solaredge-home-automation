@@ -1,0 +1,23 @@
+turn_on_for:
+  name: Turn on for
+  description: Turn on a SolarEdge Smart Energy device manually for a duration in seconds.
+  fields:
+    entity_id:
+      name: Entity
+      description: Any entity belonging to the Smart Energy device.
+      required: true
+      selector:
+        entity:
+          integration: solaredge_home_automation
+          multiple: true
+    duration:
+      name: Duration
+      description: Duration in seconds.
+      required: true
+      example: 60
+      selector:
+        number:
+          min: 1
+          max: 86400
+          mode: box
+          unit_of_measurement: seconds

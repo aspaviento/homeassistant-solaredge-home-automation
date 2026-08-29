@@ -46,6 +46,11 @@ SMART_DEVICE_BUTTONS: tuple[SolarEdgeButtonDescription, ...] = (
         translation_key="turn_off",
         press_fn="async_turn_off_device",
     ),
+    SolarEdgeButtonDescription(
+        key="auto",
+        translation_key="auto",
+        press_fn="async_auto_device",
+    ),
 )
 
 
