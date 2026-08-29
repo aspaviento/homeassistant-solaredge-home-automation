@@ -22,8 +22,8 @@ automations on top.
 - Smart Device explicit manual turn-on and turn-off buttons.
 - Smart Device Auto button, using the currently assumed `AUTO` activation mode
   payload.
-- Smart Device timed manual turn-on service, assuming SolarEdge `duration` is
-  expressed in seconds.
+- Smart Device timed manual turn-on service. SolarEdge `duration` is expressed
+  in minutes.
 - SolarEdge EV Charger status, current session data, schedule details, and
   explicit charge/stop buttons.
 - EV Charger charging, plugged-in, solar usage, available action, and
@@ -44,8 +44,7 @@ The integration creates a parent Home Assistant device named `SolarEdge Site
 
 ### `solaredge_home_automation.turn_on_for`
 
-Turns on one or more Smart Energy devices manually for a duration. The current
-implementation assumes SolarEdge expects the duration in seconds.
+Turns on one or more Smart Energy devices manually for a duration in minutes.
 
 Example:
 
