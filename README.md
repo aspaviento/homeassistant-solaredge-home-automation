@@ -81,16 +81,9 @@ data:
 - Connected Car settings, Charging History, and charger Settings are read-only or
   out of scope for now.
 
-Further controls may be added later if their SolarEdge web API endpoints and
-payload semantics are captured and tested safely. Do not assume undocumented
-endpoint behavior from the Home Assistant entity model alone.
-
-For actions that are only available in the mySolarEdge mobile app, HTTPS proxy
-capture with a tool such as Proxyman, Charles Proxy, or mitmproxy is the
-preferred discovery method. Packet capture alone is usually not enough because
-the API traffic is HTTPS encrypted. Do not publish captured cookies, bearer
-tokens, account identifiers, site IDs, device IDs, vehicle identifiers, schedules,
-or household device names.
+Further controls may be added later if their behavior is validated safely. Do
+not assume undocumented endpoint behavior from the Home Assistant entity model
+alone.
 
 ## Installation
 
