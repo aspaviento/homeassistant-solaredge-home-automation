@@ -38,6 +38,25 @@ class SolarEdgeSensorDescription(SensorEntityDescription):
 
 SMART_DEVICE_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
     SolarEdgeSensorDescription(
+        key="communication_status",
+        translation_key="communication_status",
+        value_fn=lambda device, info: device.get("communicationStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="device_status",
+        translation_key="device_status",
+        value_fn=lambda device, info: device.get("deviceStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="last_updated",
+        translation_key="last_updated",
+        value_fn=lambda device, info: _ms_timestamp(device.get("lastUpdated")),
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
         key="active_power",
         translation_key="active_power",
         value_fn=lambda device, info: (device.get("status") or {}).get("activePowerMeter"),
@@ -50,6 +69,12 @@ SMART_DEVICE_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
         key="activation_mode",
         translation_key="activation_mode",
         value_fn=lambda device, info: device.get("activationMode"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="active_trigger",
+        translation_key="active_trigger",
+        value_fn=lambda device, info: (device.get("status") or {}).get("activeTrigger"),
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SolarEdgeSensorDescription(
@@ -100,6 +125,32 @@ EV_CHARGER_SENSORS: tuple[SolarEdgeSensorDescription, ...] = (
         key="connection_status",
         translation_key="connection_status",
         value_fn=lambda device, info: device.get("connectionStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="communication_status",
+        translation_key="communication_status",
+        value_fn=lambda device, info: device.get("communicationStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="device_status",
+        translation_key="device_status",
+        value_fn=lambda device, info: device.get("deviceStatus"),
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="last_updated",
+        translation_key="last_updated",
+        value_fn=lambda device, info: _ms_timestamp(device.get("lastUpdated")),
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SolarEdgeSensorDescription(
+        key="last_communication_time",
+        translation_key="last_communication_time",
+        value_fn=lambda device, info: _ms_timestamp(device.get("lastCommunicationTime")),
+        device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SolarEdgeSensorDescription(

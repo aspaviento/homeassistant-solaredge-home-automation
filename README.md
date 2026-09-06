@@ -25,10 +25,12 @@ before being used in automations.
   in minutes.
 - Smart Device timer duration number entity and a visible turn-on-for-timer
   button per Smart Device.
+- Smart Device communication status, device status, last update timestamp, and
+  active trigger diagnostics.
 - SolarEdge EV Charger status, current session data, schedule details, and
   explicit charge/stop buttons.
 - EV Charger charging, plugged-in, solar usage, available action, and
-  connection diagnostics.
+  connection and communication diagnostics.
 - Setup and options use a numeric scan interval input in minutes. The default
   is 15 minutes, matching the conservative polling cadence of the official
   SolarEdge Home Assistant integration.

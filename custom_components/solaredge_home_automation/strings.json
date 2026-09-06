@@ -100,6 +100,21 @@
       "connection_status": {
         "name": "Connection status"
       },
+      "communication_status": {
+        "name": "Communication status"
+      },
+      "device_status": {
+        "name": "Device status"
+      },
+      "last_updated": {
+        "name": "Last updated"
+      },
+      "last_communication_time": {
+        "name": "Last communication time"
+      },
+      "active_trigger": {
+        "name": "Active trigger"
+      },
       "available_action": {
         "name": "Available action"
       },
