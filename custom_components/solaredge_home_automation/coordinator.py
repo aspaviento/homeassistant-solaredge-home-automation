@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass
 from datetime import timedelta
 from typing import Any
@@ -24,6 +25,8 @@ from .const import (
     EV_CHARGER,
     LOGGER,
 )
+
+EV_STATUS_REFRESH_OFFSETS = (5, 15, 30, 50)
 
 
 @dataclass(frozen=True)
@@ -63,6 +66,8 @@ class SolarEdgeHomeAutomationCoordinator(
             session=async_get_clientsession(hass),
         )
         self.timer_duration_minutes: dict[str, int] = {}
+        self._ev_command_lock = asyncio.Lock()
+        self._ev_refresh_tasks: dict[str, asyncio.Task[None]] = {}
 
     async def _async_update_data(self) -> SolarEdgeHomeAutomationData:
         """Fetch and normalize SolarEdge Home Automation data."""
@@ -95,21 +100,78 @@ class SolarEdgeHomeAutomationCoordinator(
 
     async def async_charge_now(self, device_id: str) -> None:
         """Start EV charging now."""
-        await self.client.async_set_activation_state(
-            device_id,
-            mode="MANUAL",
-            level=100,
-        )
-        await self.async_request_refresh()
+        await self._async_set_ev_charging(device_id, level=100, expected="CHARGING")
 
     async def async_stop_charging(self, device_id: str) -> None:
         """Stop EV charging."""
-        await self.client.async_set_activation_state(
-            device_id,
-            mode="MANUAL",
-            level=0,
+        await self._async_set_ev_charging(device_id, level=0, expected="CONNECTED")
+
+    async def _async_set_ev_charging(
+        self, device_id: str, *, level: int, expected: str
+    ) -> None:
+        """Send one command and follow up if the charger has not confirmed it."""
+        async with self._ev_command_lock:
+            if previous := self._ev_refresh_tasks.pop(device_id, None):
+                previous.cancel()
+
+            await self.client.async_set_activation_state(
+                device_id, mode="MANUAL", level=level
+            )
+            started = asyncio.get_running_loop().time()
+            previous_data = self.data
+            await self.async_request_refresh()
+            if not self._ev_status_matches(device_id, expected, previous_data):
+                self._ev_refresh_tasks[device_id] = (
+                    self.config_entry.async_create_background_task(
+                        self.hass,
+                        self._async_follow_ev_status(
+                            device_id, expected, started, previous_data
+                        ),
+                        name="SolarEdge EV charger status follow-up",
+                    )
+                )
+
+    def _ev_status_matches(
+        self,
+        device_id: str,
+        expected: str,
+        previous_data: SolarEdgeHomeAutomationData | None,
+    ) -> bool:
+        """Check fresh data for the same status field that backs the sensor."""
+        return (
+            self.last_update_success
+            and self.data is not None
+            and self.data is not previous_data
+            and any(
+                str(charger.get("reporterId") or charger.get("deviceId") or "") == device_id
+                and charger.get("connectionStatus") == expected
+                for charger in self.data.ev_chargers
+            )
         )
-        await self.async_request_refresh()
+
+    async def _async_follow_ev_status(
+        self,
+        device_id: str,
+        expected: str,
+        started: float,
+        previous_data: SolarEdgeHomeAutomationData | None,
+    ) -> None:
+        """Request bounded refreshes without replaying the charger command."""
+        loop = asyncio.get_running_loop()
+        try:
+            for offset in EV_STATUS_REFRESH_OFFSETS:
+                delay = started + offset - loop.time()
+                if delay <= 0:
+                    continue
+                await asyncio.sleep(delay)
+                if self._ev_status_matches(device_id, expected, previous_data):
+                    return
+                await self.async_request_refresh()
+                if self._ev_status_matches(device_id, expected, previous_data):
+                    return
+        finally:
+            if self._ev_refresh_tasks.get(device_id) is asyncio.current_task():
+                self._ev_refresh_tasks.pop(device_id)
 
     async def async_turn_on_device(self, device_id: str) -> None:
         """Turn on a Smart Energy device manually."""
